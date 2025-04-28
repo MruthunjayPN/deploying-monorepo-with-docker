@@ -46,4 +46,7 @@ jobs:
             # Clean up old container if exists
             sudo docker rm -f backend-app || true
 
+            # Free up port 8080 if something else is using it (OPTIONAL STEP: safer way)
+            sudo fuser -k 8080/tcp || true
+
             sudo docker run -d --name backend-app -p 8080:8080 muttu1511/todo-app-backend:${{ github.sha }}
