@@ -41,4 +41,4 @@ jobs:
             sudo usermod -aG docker ubuntu
             newgrp docker
             sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            sudo docker run muttu1511/http-backend:${{ github.sha }}
+            sudo docker run muttu1511/todo-app-backend:${{ github.sha }}
