@@ -34,11 +34,16 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo apt update
-            sudo apt install docker.io docker-compose -y
-            sudo systemctl start docker
-            sudo systemctl enable docker
-            sudo usermod -aG docker ubuntu
-            newgrp docker
+            # sudo apt update
+            # sudo apt install docker.io docker-compose -y
+            # sudo systemctl start docker
+            # sudo systemctl enable docker
+            # sudo usermod -aG docker ubuntu
+            # newgrp docker 
+            # no need of above commands , bcz we know docker is installed in VM
             sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            sudo docker run muttu1511/todo-app-backend:${{ github.sha }}
+
+            # Clean up old container if exists
+            sudo docker rm -f backend-app || true
+
+            sudo docker run -d --name backend-app -p 8080:8080 muttu1511/todo-app-backend:${{ github.sha }}
