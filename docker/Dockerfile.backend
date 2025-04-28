@@ -10,6 +10,9 @@ COPY bun.lock  bun.lock
 
 COPY ./apps/http-be ./apps/http-be
 
+# Install OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
+
 RUN bun install
 RUN bun run db:generate
 
