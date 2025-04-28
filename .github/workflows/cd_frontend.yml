@@ -1,4 +1,4 @@
-name: CD websocket
+name: CD frontend
 on: 
     push:
         branches: [ main ]

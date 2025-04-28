@@ -26,3 +26,19 @@ jobs:
           file: ./docker/Dockerfile.backend
           push: true
           tags:  muttu1511/todo-app-backend:${{ github.sha }}
+  
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo apt update
+            sudo apt install docker.io docker-compose -y
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker ubuntu
+            newgrp docker
+            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            sudo docker run muttu1511/http-backend:${{ github.sha }}
