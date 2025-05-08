@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: CD frontend
+=======
+name: CD websocket
+>>>>>>> d5b11c6 (changed start scripts)
 on: 
     push:
         branches: [ main ]
